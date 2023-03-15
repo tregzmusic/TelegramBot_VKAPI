@@ -3,6 +3,7 @@ import vk_api
 import configparser
 from config import API_KEY
 
+
 bot = telebot.TeleBot(API_KEY)
 
 config = configparser.ConfigParser()
@@ -22,7 +23,7 @@ def send_welcome(message):
 
 @bot.message_handler(regexp='Получить список друзей')
 def echo_message(message):
-    def get_friens(user_id):
+    def get_friends(user_id):
         friends = session.method('friends.get', {'user_id': user_id})
         # online = session.method('friends.getOnline', {'user_id': user_id})
         for friend_id, friend in enumerate(friends['items']):
@@ -30,7 +31,7 @@ def echo_message(message):
             bot.send_message(message.chat.id,
                              text=f'{friend_id + 1}: {user[0]["id"]}, {user[0]["first_name"]}, {user[0]["last_name"]}')
 
-    get_friens('732636338')
+    get_friends('732636338')
 
 
 bot.infinity_polling()
